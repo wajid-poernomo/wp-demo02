@@ -1,12 +1,12 @@
 {
   "location": "BOSTON LOGAN INTERNATIONAL, MA, United States (KBOS) 42-22N 071-01W 54M",
   "time": "Nov 30, 2013 - 03:54 PM EST / 2013.11.30 2054 UTC",
-  "wind": " from the E (100 degrees) at 5 MPH (4 KT):0",
-  "visibility": " 10 mile(s):0",
-  "skyConditions": " mostly cloudy",
-  "temperature": " 30.9 F (-0.6 C)",
-  "dewPoint": " 18.0 F (-7.8 C)",
-  "relativeHumidity": " 58%",
-  "pressure": " 30.63 in. Hg (1037 hPa)",
-  "pressureTendency": " 0.07 inches (2.3 hPa) lower than three hours ago"
+  "wind": "from the E (100 degrees) at 5 MPH (4 KT):0",
+  "visibility": "10 mile(s):0",
+  "skyConditions": "mostly cloudy",
+  "temperature": "30.9 F (-0.6 C)",
+  "dewPoint": "18.0 F (-7.8 C)",
+  "relativeHumidity": "58%",
+  "pressure": "30.63 in. Hg (1037 hPa)",
+  "pressureTendency": "0.07 inches (2.3 hPa) lower than three hours ago"
 }

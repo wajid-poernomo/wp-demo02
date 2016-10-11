@@ -32,6 +32,5 @@
 		"pressureTendency": {
 			"type": "string"
 		},
-	},
-	"required": ["firstName", "lastName"]
+	}
 }
