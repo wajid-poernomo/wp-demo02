@@ -1,59 +1,413 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
-    <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
-    <apikit:config name="api-config" raml="api.raml" consoleEnabled="false" doc:name="Router"/>
-    <flow name="api-main">
-        <http:listener config-ref="api-httpListenerConfig" path="/weatherApi" doc:name="HTTP"/>
-        <apikit:router config-ref="api-config" doc:name="APIkit Router"/>
-        <exception-strategy ref="api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
-    </flow>
-    <flow name="api-console">
-        <http:listener config-ref="api-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
-        <apikit:console config-ref="api-config" doc:name="APIkit Console"/>
-    </flow>
-    <flow name="get:/weather:api-config">
-        <set-payload value="{&#xA;  &quot;location&quot;: &quot;BOSTON LOGAN INTERNATIONAL, MA, United States (KBOS) 42-22N 071-01W 54M&quot;,&#xA;  &quot;time&quot;: &quot;Nov 30, 2013 - 03:54 PM EST / 2013.11.30 2054 UTC&quot;,&#xA;  &quot;wind&quot;: &quot; from the E (100 degrees) at 5 MPH (4 KT):0&quot;,&#xA;  &quot;visibility&quot;: &quot; 10 mile(s):0&quot;,&#xA;  &quot;skyConditions&quot;: &quot; mostly cloudy&quot;,&#xA;  &quot;temperature&quot;: &quot; 30.9 F (-0.6 C)&quot;,&#xA;  &quot;dewPoint&quot;: &quot; 18.0 F (-7.8 C)&quot;,&#xA;  &quot;relativeHumidity&quot;: &quot; 58%&quot;,&#xA;  &quot;pressure&quot;: &quot; 30.63 in. Hg (1037 hPa)&quot;,&#xA;  &quot;pressureTendency&quot;: &quot; 0.07 inches (2.3 hPa) lower than three hours ago&quot;&#xA;}" doc:name="Set Payload"/>
-    </flow>
-    <flow name="get:/cities:api-config">
-        <set-payload value="{&#xA;  &quot;cities&quot;: [&#xA;    {&#xA;      &quot;name&quot;: &quot;Ahtari&quot;,&#xA;      &quot;description&quot;: &quot;Ahtari - a great city to be.&quot;&#xA;      &quot;link&quot;: &quot;/weather?country=finland&amp;city=Ahtari&quot;&#xA;    },&#xA;    {&#xA;      &quot;name&quot;: &quot;Ivalo&quot;,&#xA;      &quot;description&quot;: &quot;Ivalo - a great city to be.&quot;,&#xA;      &quot;link&quot;: &quot;/weather?country=finland&amp;city=Ivalo&quot;&#xA;    }&#xA;  ]&#xA;}" doc:name="Set Payload"/>
-    </flow>
-    <flow name="get:/countries:api-config">
-        <set-payload value="{&#xA;  &quot;countries&quot;: [&#xA;    {&#xA;      &quot;name&quot;: &quot;Algeria&quot;,&#xA;      &quot;description&quot;: &quot;Algeria - a great country to be.&quot;,&#xA;      &quot;link&quot;: &quot;/cities/Algeria&quot;&#xA;    },&#xA;    {&#xA;      &quot;name&quot;: &quot;Tunisia&quot;,&#xA;      &quot;description&quot;: &quot;Tunisia - a great country to be.&quot;,&#xA;      &quot;link&quot;: &quot;/cities/Tunisia&quot;&#xA;    },&#xA;    {&#xA;      &quot;name&quot;: &quot;Finland&quot;,&#xA;      &quot;description&quot;: &quot;Finland - a great country to be.&quot;,&#xA;      &quot;link&quot;: &quot;/cities/Finland&quot;&#xA;    },&#xA;    {&#xA;      &quot;name&quot;: &quot;Italy&quot;,&#xA;      &quot;description&quot;: &quot;Italy - a great country to be.&quot;,&#xA;      &quot;link&quot;: &quot;/cities/Italy&quot;&#xA;    },&#xA;    {&#xA;      &quot;name&quot;: &quot;United States&quot;,&#xA;      &quot;description&quot;: &quot;United States - a great country to be.&quot;,&#xA;      &quot;link&quot;: &quot;/cities/United States&quot;&#xA;    }&#xA;  ]&#xA;}" doc:name="Set Payload"/>
-    </flow>
-    <flow name="get:/cities/{countryName}:api-config">
-        <set-payload value="{&#xA;  &quot;city&quot;: {&#xA;      &quot;name&quot;: &quot;Ahtari&quot;,&#xA;      &quot;description&quot;: &quot;Ahtari - a great city to be.&quot;&#xA;      &quot;link&quot;: &quot;/weather?country=finland&amp;city=Ahtari&quot;        &#xA;  }&#xA;}" doc:name="Set Payload"/>
-    </flow>
-    <flow name="get:/countries/{countryName}:api-config">
-        <set-payload value="{&#xA;    &quot;name&quot;: &quot;Algeria&quot;,&#xA;    &quot;description&quot;: &quot;Algeria - a great country to be.&quot;,&#xA;    &quot;link&quot;: &quot;/cities/Algeria&quot;&#xA;}" doc:name="Set Payload"/>
-    </flow>
-    <apikit:mapping-exception-strategy name="api-apiKitGlobalExceptionMapping">
-        <apikit:mapping statusCode="404">
-            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
-            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
-            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
-        </apikit:mapping>
-        <apikit:mapping statusCode="405">
-            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
-            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
-            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
-        </apikit:mapping>
-        <apikit:mapping statusCode="415">
-            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
-            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
-            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
-        </apikit:mapping>
-        <apikit:mapping statusCode="406">
-            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
-            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
-            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
-        </apikit:mapping>
-        <apikit:mapping statusCode="400">
-            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
-            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
-            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
-        </apikit:mapping>
-    </apikit:mapping-exception-strategy>
+	<http:listener-config name="api-httpListenerConfig"
+		host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
+	<apikit:config name="api-config" raml="api.raml"
+		consoleEnabled="false" doc:name="Router" />
+	<ws:consumer-config name="Web_Service_Consumer"
+		service="GlobalWeatherSoapService" port="GlobalWeatherSoapPort"
+		serviceAddress="http://localhost:63081/weather" wsdlLocation="http://localhost:63081/weather?wsdl"
+		doc:name="Web Service Consumer" />
+	<flow name="api-main">
+		<http:listener config-ref="api-httpListenerConfig" path="/weatherApi/*"
+			doc:name="HTTP" />
+		<apikit:router config-ref="api-config" doc:name="APIkit Router" />
+		<exception-strategy ref="api-apiKitGlobalExceptionMapping"
+			doc:name="Reference Exception Strategy" />
+	</flow>
+	<flow name="api-console">
+		<http:listener config-ref="api-httpListenerConfig" path="/console/*"
+			doc:name="HTTP" />
+		<apikit:console config-ref="api-config" doc:name="APIkit Console" />
+	</flow>
+	<flow name="get:/weather:api-config">
+
+
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetWeather: {
+		ns0#CityName: inboundProperties."http.query.params".city,
+		ns0#CountryName: inboundProperties."http.query.params".country
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="GetWeather"
+			doc:name="Web Service Consumer" />
+		<logger message="#[payload]" level="INFO" doc:name="Logger" />
+
+
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%input payload application/xml
+%output application/json
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	location: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Location,
+	time: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Time,
+	wind: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Wind,
+	visibility: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Visibility,
+	skyConditions: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.SkyConditions,
+	temperature: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Temperature,
+	dewPoint: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.DewPoint,
+	relativeHumidity: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.RelativeHumidity,
+	pressure: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Pressure,
+	pressureTendency: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.PressureTendency
+}
+
+]]></dw:set-payload>
+			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+%input payload application/xml
+%output application/java
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	"notFound" : false
+	
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+	"notFound" : true
+}]]></dw:set-variable>
+
+		</dw:transform-message>
+		<logger message="#[responseMap['notFound']]" level="INFO"
+			doc:name="Logger" />
+		<choice doc:name="Choice">
+			<when expression="#[responseMap['notFound']]">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404"
+					doc:name="Property" />
+			</when>
+			<otherwise>
+				<set-payload value="#[payload]" doc:name="Set Payload" />
+			</otherwise>
+		</choice>
+
+
+	</flow>
+	<flow name="get:/cities:api-config">
+
+
+
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetCitiesByCountry: {
+		ns0#CountryName: null
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
+			doc:name="Web Service Consumer" />
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%namespace ns0 http://www.webserviceX.NET
+%var toItem = (item) -> {name: item.City, description: item.City ++ " - a great city to be.", link: "~/weatherApi/" 
+	++ "weather?country=" ++ item.Country ++ "&city=" ++ item.City
+}
+---
+
+{
+	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
+		map toItem($)
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+}]]></dw:set-payload>
+			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+%namespace ns0 http://www.webserviceX.NET
+%output application/java
+---
+{
+	"notFound": false
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+	"notFound": true
+}]]></dw:set-variable>
+		</dw:transform-message>
+		<logger message="#[responseMap['notFound']]" level="INFO"
+			doc:name="Logger" />
+		<choice doc:name="Choice">
+			<when expression="#[responseMap['notFound']]">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404"
+					doc:name="Property" />
+			</when>
+			<otherwise>
+				<set-payload value="#[payload]" doc:name="Set Payload" />
+			</otherwise>
+		</choice>
+
+
+	</flow>
+	<flow name="get:/countries:api-config">
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetCitiesByCountry: {
+		ns0#CountryName: null
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
+			doc:name="Web Service Consumer" />
+
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%namespace ns0 http://www.webserviceX.NET
+%var toItem = (item) -> {name: item.Country, description: item.Country ++ " - a great country to be.", link: "~/weatherApi/" 
+	++ "cities/" ++ item.Country
+}
+---
+
+{
+	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
+		distinctBy $.Country
+		map toItem($)
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+}]]></dw:set-payload>
+			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+%namespace ns0 http://www.webserviceX.NET
+%output application/java
+---
+{
+	"notFound": false
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+	"notFound": true
+}]]></dw:set-variable>
+		</dw:transform-message>
+		<logger message="#[responseMap['notFound']]" level="INFO"
+			doc:name="Logger" />
+		<choice doc:name="Choice">
+			<when expression="#[responseMap['notFound']]">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404"
+					doc:name="Property" />
+			</when>
+			<otherwise>
+				<set-payload value="#[payload]" doc:name="Set Payload" />
+			</otherwise>
+		</choice>
+
+	</flow>
+	<flow name="get:/cities/{countryName}:api-config">
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetCitiesByCountry: {
+		ns0#CountryName: flowVars.countryName
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
+			doc:name="Web Service Consumer" />
+		<logger message="#[payload]" level="INFO" doc:name="Logger" />
+
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%namespace ns0 http://www.webserviceX.NET
+%var toItem = (item) -> {name: item.City, description: item.City ++ " - a great city to be.", link: "~/weatherApi/" 
+	++ "weather?country=" ++ item.Country ++ "&city=" ++ item.City
+}
+---
+
+{
+	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
+		map toItem($)
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+}
+]]></dw:set-payload>
+			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+%namespace ns0 http://www.webserviceX.NET
+%output application/java
+---
+{
+	"notFound": false
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+	"notFound": true
+}]]></dw:set-variable>
+		</dw:transform-message>
+		<logger message="#[responseMap['notFound']]" level="INFO"
+			doc:name="Logger" />
+		<choice doc:name="Choice">
+			<when expression="#[responseMap['notFound']]">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404"
+					doc:name="Property" />
+			</when>
+			<otherwise>
+				<set-payload value="#[payload]" doc:name="Set Payload" />
+			</otherwise>
+		</choice>
+
+	</flow>
+	<flow name="get:/countries/{countryName}:api-config">
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 http://www.webserviceX.NET
+---
+{
+	ns0#GetCitiesByCountry: {
+		ns0#CountryName: flowVars.countryName
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<ws:consumer config-ref="Web_Service_Consumer"
+			operation="GetCitiesByCountry" doc:name="Web Service Consumer" />
+		<logger message="#[payload]" level="INFO" doc:name="Logger" />
+
+		<dw:transform-message
+			doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%namespace ns0 http://www.webserviceX.NET
+%var toItem = (item) -> {name: item.Country, description: item.Country ++ " - a great country to be.", link: "~/weatherApi/" 
+	++ "cities/" ++ item.Country
+}
+---
+
+{
+	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
+		distinctBy $.Country
+		map toItem($)
+}[0]
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+}]]></dw:set-payload>
+			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+%namespace ns0 http://www.webserviceX.NET
+%output application/java
+---
+{
+	"notFound": false
+}
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
+or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+otherwise
+{
+	"notFound": true
+}]]></dw:set-variable>
+		</dw:transform-message>
+		<logger message="#[responseMap['notFound']]" level="INFO"
+			doc:name="Logger" />
+		<choice doc:name="Choice">
+			<when expression="#[responseMap['notFound']]">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" />
+				<set-property propertyName="http.status" value="404"
+					doc:name="Property" />
+			</when>
+			<otherwise>
+				<set-payload value="#[payload]" doc:name="Set Payload" />
+			</otherwise>
+		</choice>
+
+	</flow>
+	<apikit:mapping-exception-strategy
+		name="api-apiKitGlobalExceptionMapping">
+		<apikit:mapping statusCode="404">
+			<apikit:exception
+				value="org.mule.module.apikit.exception.NotFoundException" />
+			<set-property propertyName="Content-Type" value="application/json"
+				doc:name="Property" />
+			<set-payload
+				value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+				doc:name="Set Payload" />
+		</apikit:mapping>
+		<apikit:mapping statusCode="405">
+			<apikit:exception
+				value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+			<set-property propertyName="Content-Type" value="application/json"
+				doc:name="Property" />
+			<set-payload
+				value="{ &quot;message&quot;: &quot;Method not allowed&quot; }"
+				doc:name="Set Payload" />
+		</apikit:mapping>
+		<apikit:mapping statusCode="415">
+			<apikit:exception
+				value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+			<set-property propertyName="Content-Type" value="application/json"
+				doc:name="Property" />
+			<set-payload
+				value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }"
+				doc:name="Set Payload" />
+		</apikit:mapping>
+		<apikit:mapping statusCode="406">
+			<apikit:exception
+				value="org.mule.module.apikit.exception.NotAcceptableException" />
+			<set-property propertyName="Content-Type" value="application/json"
+				doc:name="Property" />
+			<set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }"
+				doc:name="Set Payload" />
+		</apikit:mapping>
+		<apikit:mapping statusCode="400">
+			<apikit:exception
+				value="org.mule.module.apikit.exception.BadRequestException" />
+			<set-property propertyName="Content-Type" value="application/json"
+				doc:name="Property" />
+			<set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }"
+				doc:name="Set Payload" />
+		</apikit:mapping>
+	</apikit:mapping-exception-strategy>
 </mule>
