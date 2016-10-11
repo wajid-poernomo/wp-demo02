@@ -1,0 +1,37 @@
+{
+	"title": "Schema for weather",
+	"type": "object",
+	"properties": {
+		"location": {
+			"type": "string"
+		},
+		"time": {
+			"type": "string"
+		},
+		"wind": {
+			"type": "string"
+		},
+		"visibility": {
+			"type": "string"
+		},
+		"skyConditions": {
+			"type": "string"
+		},
+		"temperature": {
+			"type": "string"
+		},
+		"dewPoint": {
+			"type": "string"
+		},
+		"relativeHumidity": {
+			"type": "string"
+		},
+		"pressure": {
+			"type": "string"
+		},
+		"pressureTendency": {
+			"type": "string"
+		},
+	},
+	"required": ["firstName", "lastName"]
+}

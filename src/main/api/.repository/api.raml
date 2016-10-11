@@ -1,0 +1,104 @@
+#%RAML 0.8
+title: weatherApi
+version: 1
+
+schemas:
+  - city: !include city.jsonschema
+  - country: !include country.jsonschema
+  - weather: !include weather.jsonschema
+
+resourceTypes:
+  - collection:
+      description: List of <<resourcePathName>> in the world.
+      get:
+        description: List of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  <<exampleCollection>>
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "resource not found" }
+          400:
+            body:
+              application/json:
+                example: |
+                  {"message": "incorrect input" }
+          500:
+            body:
+              application/json:
+                example: |
+                  {"message": "server error" }
+  - collection-item:
+      description: A single <<resourcePathName|!singularize>>
+      get:
+        description: |
+          Get the <<resourcePathName|!singularize>>
+          with uri parameter
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  <<exampleItem>>
+          404:
+            body:
+              application/json:
+                example: |
+                  {"message": "resource not found" }
+          400:
+            body:
+              application/json:
+                example: |
+                  {"message": "incorrect input" }
+          500:
+            body:
+              application/json:
+                example: |
+                  {"message": "server error" }
+/countries:
+  type:
+    collection:
+      exampleCollection: !include countries.json
+  /{countryName}:
+      type:
+        collection-item:
+          exampleItem: !include country.json
+/cities:
+  type:
+    collection:
+      exampleCollection: !include cities.json
+  /{countryName}:
+      type:
+        collection-item:
+          exampleItem: !include city.json
+
+/weather:
+  get:
+    queryParameters:
+      country:
+      city:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include weather.json
+      404:
+            body:
+              application/json:
+                example: |
+                  {"message": "resource not found" }
+      400:
+            body:
+              application/json:
+                example: |
+                  {"message": "incorrect input" }
+      500:
+            body:
+              application/json:
+                example: |
+                  {"message": "server error" }

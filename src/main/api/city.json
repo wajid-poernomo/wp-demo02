@@ -1,0 +1,7 @@
+{
+  "city": {
+      "name": "Ahtari",
+      "description": "Ahtari - a great city to be."
+      "link": "/weather?country=finland&city=Ahtari"        
+  }
+}
