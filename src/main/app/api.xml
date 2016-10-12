@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -54,7 +54,6 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
         <logger message="#[payload]" level="INFO" doc:name="Logger"/>
 
-		<logger message="#[payload contains 'No Data Found']" level="INFO" doc:name="Logger" />
         <choice doc:name="Choice">
             <when expression="#[payload contains 'No Data Found']">
                 <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
@@ -227,6 +226,7 @@ otherwise
         <validation:is-true message="{ &quot;message&quot; : &quot;Incorrect input&quot; }" expression="#[message.outboundProperties.isValidInput]" doc:name="Validation" exceptionClass="org.mule.module.apikit.exception.BadRequestException"/>
 		<dw:transform-message doc:name="Transform Message">
 			<dw:set-payload><![CDATA[%dw 1.0
+
 %output application/xml
 %namespace ns0 http://www.webserviceX.NET
 ---
@@ -239,6 +239,7 @@ otherwise
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="Web Service Consumer" />
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+
 		<logger message="#[payload]" level="INFO" doc:name="Logger" />
 
 		<dw:transform-message doc:name="Transform Message">
@@ -398,7 +399,7 @@ otherwise
 				value="org.mule.module.apikit.exception.BadRequestException" />
 			<set-property propertyName="Content-Type" value="application/json"
 				doc:name="Property" />
-			<set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }"
+			<set-payload value="{ &quot;message&quot; : &quot;Incorrect input&quot; }"
 				doc:name="Set Payload" />
 		</apikit:mapping>
 		<apikit:mapping statusCode="500">
