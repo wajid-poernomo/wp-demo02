@@ -233,7 +233,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -256,15 +256,15 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 	<munit:test
 		name="get:/countries/hobbitcountry:api-config-404-application/json-FlowTest"
 		description="Verifying functionality of [get:/countries/countryName:api-config-404-application/json] when country name is hobbitcountry">
-		<mock:when messageProcessor=".*:.*" doc:name="Mock">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="text/xml"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="text/plain"/>
+        </mock:when>
 
-		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
-			method="HEAD" path="/countries/hobitcountry" doc:name="HTTP">
+			method="GET" path="/countries/hobitcountry" doc:name="HTTP">
 
 			<http:success-status-code-validator
 				values="404" />
@@ -280,6 +280,12 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 
 	<munit:test name="get:/cities:api-config-500-application/json-FlowTest"
 		description="Verifying functionality of [get:/cities:api-config-500-application/json]">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['WebConsumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]"/>
+        </mock:when>
 		<mock:throw-an whenCalling="mule:web-service-consumer"
 			exception-ref="#[new java.lang.Exception()]" doc:name="Throw an Exception">
 		</mock:throw-an>
@@ -302,6 +308,12 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 
 	<munit:test name="get:/countries:api-config-500-application/json-FlowTest"
 		description="Verifying functionality of [get:/countries:api-config-500-application/json]">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]"/>
+        </mock:when>
 		<mock:throw-an whenCalling="mule:web-service-consumer"
 			exception-ref="#[new java.lang.Exception()]" doc:name="Throw an Exception">
 		</mock:throw-an>
@@ -324,6 +336,12 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 
 	<munit:test name="get:/weather:api-config-500-application/json-FlowTest"
 		description="Verifying functionality of [get:/weather:api-config-500-application/json]">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]"/>
+        </mock:when>
 		<mock:throw-an whenCalling="mule:web-service-consumer"
 			exception-ref="#[new java.lang.Exception()]" doc:name="Throw an Exception">
 		</mock:throw-an>
@@ -407,11 +425,10 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 		name="get:/countries/countryName:api-config-400-application/json-FlowTest"
 		description="Verifying functionality of [get:/countries/countryName:api-config-400-application/json]">
 		<mock:when messageProcessor=".*:.*" doc:name="Mock">
-			<mock:with-attributes>
-				<mock:with-attribute name="doc:name"
-					whereValue="#['Web Service Consumer']" />
-			</mock:with-attributes>
-			<mock:then-return payload="#[]" />
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#[]"/>
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
 			method="GET" path="/countries/i" doc:name="HTTP">

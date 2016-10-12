@@ -56,7 +56,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 
         <choice doc:name="Choice">
             <when expression="#[payload contains 'No Data Found']">
-                <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+                <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" mimeType="application/json"/>
                 <set-property propertyName="http.status" value="404" doc:name="404"/>
             </when>
             <otherwise>
@@ -85,7 +85,7 @@ otherwise
                 </dw:transform-message>
             </otherwise>
         </choice>
-        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+
 
 
 
@@ -145,12 +145,12 @@ otherwise
 			<when expression="#[responseMap['notFound']]">
 				<set-payload
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" />
+					doc:name="Set Payload" mimeType="application/json"/>
 				<set-property propertyName="http.status" value="404"
 					doc:name="404" />
 			</when>
 			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" />
+				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
 			</otherwise>
 		</choice>
 
@@ -210,12 +210,12 @@ otherwise
 			<when expression="#[responseMap['notFound']]">
 				<set-payload
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" />
+					doc:name="Set Payload" mimeType="application/json"/>
 				<set-property propertyName="http.status" value="404"
 					doc:name="404" />
 			</when>
 			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" />
+				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
 			</otherwise>
 		</choice>
 
@@ -278,12 +278,12 @@ otherwise
 			<when expression="#[responseMap['notFound']]">
 				<set-payload
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" />
+					doc:name="Set 404" mimeType="application/json"/>
 				<set-property propertyName="http.status" value="404"
 					doc:name="404" />
 			</when>
 			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" />
+				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
 			</otherwise>
 		</choice>
 
@@ -346,12 +346,12 @@ otherwise
 			<when expression="#[responseMap['notFound']]">
 				<set-payload
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" />
+					doc:name="Set Payload" mimeType="application/json"/>
 				<set-property propertyName="http.status" value="404"
 					doc:name="404" />
 			</when>
 			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" />
+				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
 			</otherwise>
 		</choice>
 
