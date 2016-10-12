@@ -25,8 +25,11 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 		<http:listener config-ref="api-httpListenerConfig" path="/weatherApi/*"
 			doc:name="HTTP" />
 		<apikit:router config-ref="api-config" doc:name="APIkit Router" />
-		<exception-strategy ref="api-apiKitGlobalExceptionMapping"
-			doc:name="Reference Exception Strategy" />
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-payload value="{ &quot;message&quot;: &quot;Server error&quot; }" doc:name="500"/>
+            <set-property propertyName="http.status" value="500" doc:name="Property"/>
+        </catch-exception-strategy>
+
 	</flow>
 	<flow name="api-console">
 		<http:listener config-ref="api-httpListenerConfig" path="/console/*"
@@ -34,10 +37,8 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 		<apikit:console config-ref="api-config" doc:name="APIkit Console" />
 	</flow>
 	<flow name="get:/weather:api-config">
-
-
-		<dw:transform-message doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
 %output application/xml
 %namespace ns0 http://www.webserviceX.NET
 ---
@@ -47,7 +48,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
 		ns0#CountryName: inboundProperties."http.query.params".country
 	}
 }]]></dw:set-payload>
-		</dw:transform-message>
+        </dw:transform-message>
         <ws:consumer config-ref="Web_Service_Consumer2" operation="GetWeather" doc:name="Web Service Consumer"/>
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
         <logger message="#[payload]" level="INFO" doc:name="Logger"/>
@@ -56,7 +57,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
         <choice doc:name="Choice">
             <when expression="#[payload contains 'No Data Found']">
                 <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
-                <set-property propertyName="http.status" value="404" doc:name="Property"/>
+                <set-property propertyName="http.status" value="404" doc:name="404"/>
             </when>
             <otherwise>
                 <dw:transform-message doc:name="Transform Message">
@@ -146,7 +147,7 @@ otherwise
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
 					doc:name="Set Payload" />
 				<set-property propertyName="http.status" value="404"
-					doc:name="Property" />
+					doc:name="404" />
 			</when>
 			<otherwise>
 				<set-payload value="#[payload]" doc:name="Set Payload" />
@@ -211,7 +212,7 @@ otherwise
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
 					doc:name="Set Payload" />
 				<set-property propertyName="http.status" value="404"
-					doc:name="Property" />
+					doc:name="404" />
 			</when>
 			<otherwise>
 				<set-payload value="#[payload]" doc:name="Set Payload" />
@@ -274,7 +275,7 @@ otherwise
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
 					doc:name="Set Payload" />
 				<set-property propertyName="http.status" value="404"
-					doc:name="Property" />
+					doc:name="404" />
 			</when>
 			<otherwise>
 				<set-payload value="#[payload]" doc:name="Set Payload" />
@@ -339,7 +340,7 @@ otherwise
 					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
 					doc:name="Set Payload" />
 				<set-property propertyName="http.status" value="404"
-					doc:name="Property" />
+					doc:name="404" />
 			</when>
 			<otherwise>
 				<set-payload value="#[payload]" doc:name="Set Payload" />
@@ -347,50 +348,5 @@ otherwise
 		</choice>
 
 	</flow>
-	<apikit:mapping-exception-strategy
-		name="api-apiKitGlobalExceptionMapping">
-		<apikit:mapping statusCode="404">
-			<apikit:exception
-				value="org.mule.module.apikit.exception.NotFoundException" />
-			<set-property propertyName="Content-Type" value="application/json"
-				doc:name="Property" />
-			<set-payload
-				value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-				doc:name="Set Payload" />
-		</apikit:mapping>
-		<apikit:mapping statusCode="405">
-			<apikit:exception
-				value="org.mule.module.apikit.exception.MethodNotAllowedException" />
-			<set-property propertyName="Content-Type" value="application/json"
-				doc:name="Property" />
-			<set-payload
-				value="{ &quot;message&quot;: &quot;Method not allowed&quot; }"
-				doc:name="Set Payload" />
-		</apikit:mapping>
-		<apikit:mapping statusCode="415">
-			<apikit:exception
-				value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
-			<set-property propertyName="Content-Type" value="application/json"
-				doc:name="Property" />
-			<set-payload
-				value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }"
-				doc:name="Set Payload" />
-		</apikit:mapping>
-		<apikit:mapping statusCode="406">
-			<apikit:exception
-				value="org.mule.module.apikit.exception.NotAcceptableException" />
-			<set-property propertyName="Content-Type" value="application/json"
-				doc:name="Property" />
-			<set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }"
-				doc:name="Set Payload" />
-		</apikit:mapping>
-		<apikit:mapping statusCode="400">
-			<apikit:exception
-				value="org.mule.module.apikit.exception.BadRequestException" />
-			<set-property propertyName="Content-Type" value="application/json"
-				doc:name="Property" />
-			<set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }"
-				doc:name="Set Payload" />
-		</apikit:mapping>
-	</apikit:mapping-exception-strategy>
+
 </mule>
