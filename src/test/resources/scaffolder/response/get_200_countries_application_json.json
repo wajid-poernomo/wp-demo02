@@ -1,0 +1,29 @@
+{
+  "countries": [
+    {
+      "name": "Algeria",
+      "description": "Algeria - a great country to be.",
+      "link": "~/weatherApi/cities/Algeria"
+    },
+    {
+      "name": "Tunisia",
+      "description": "Tunisia - a great country to be.",
+      "link": "~/weatherApi/cities/Tunisia"
+    },
+    {
+      "name": "Finland",
+      "description": "Finland - a great country to be.",
+      "link": "~/weatherApi/cities/Finland"
+    },
+    {
+      "name": "Italy",
+      "description": "Italy - a great country to be.",
+      "link": "~/weatherApi/cities/Italy"
+    },
+    {
+      "name": "United States",
+      "description": "United States - a great country to be.",
+      "link": "~/weatherApi/cities/United States"
+    }
+  ]
+}

@@ -1,17 +1,17 @@
 <metadata__cache__entry>
   <version>5.2.0.0</version>
-  <connectorName>Web_Service_Consumer</connectorName>
+  <connectorName>Web_Service_Consumer2</connectorName>
   <metadataIo class="tree-map">
     <entry>
-      <string>GetCitiesByCountry</string>
+      <string>GetWeather</string>
       <map>
         <entry>
           <string>__default__</string>
           <org.mule.tooling.metadata.cache.DefaultMetadataCacheEntry>
             <input class="org.mule.common.metadata.DefaultMetaData">
               <payload class="org.mule.tooling.metadata.api.TypeRefMetaDataModel">
-                <connectorName>Web_Service_Consumer</connectorName>
-                <typeId>GetCitiesByCountry</typeId>
+                <connectorName>Web_Service_Consumer2</connectorName>
+                <typeId>GetWeather</typeId>
                 <category>DEFAULT</category>
               </payload>
               <properties>
@@ -49,8 +49,8 @@
             </input>
             <output class="org.mule.common.metadata.DefaultMetaData">
               <payload class="org.mule.tooling.metadata.api.TypeRefMetaDataModel">
-                <connectorName>Web_Service_Consumer</connectorName>
-                <typeId>GetCitiesByCountryResponse</typeId>
+                <connectorName>Web_Service_Consumer2</connectorName>
+                <typeId>GetWeatherResponse</typeId>
                 <category>DEFAULT</category>
               </payload>
               <properties>

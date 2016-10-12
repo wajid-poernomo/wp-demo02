@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -8,7 +8,9 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
 	<http:listener-config name="api-httpListenerConfig"
 		host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
 	<apikit:config name="api-config" raml="api.raml"
@@ -17,6 +19,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 		service="GlobalWeatherSoapService" port="GlobalWeatherSoapPort"
 		serviceAddress="http://localhost:63081/weather" wsdlLocation="http://localhost:63081/weather?wsdl"
 		doc:name="Web Service Consumer" />
+    <ws:consumer-config name="Web_Service_Consumer1" service="GlobalWeather" port="GlobalWeatherSoap12" serviceAddress="http://www.webservicex.net/globalweather.asmx" wsdlLocation="http://www.webservicex.net/globalweather.asmx?wsdl" doc:name="Web Service Consumer"/>
+    <ws:consumer-config name="Web_Service_Consumer2" service="GlobalWeatherSoapService" port="GlobalWeatherSoapPort" serviceAddress="http://localhost:63081/weather" wsdlLocation="http://localhost:63081/weather?wsdl" doc:name="Web Service Consumer"/>
 	<flow name="api-main">
 		<http:listener config-ref="api-httpListenerConfig" path="/weatherApi/*"
 			doc:name="HTTP" />
@@ -44,13 +48,19 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	}
 }]]></dw:set-payload>
 		</dw:transform-message>
-		<ws:consumer config-ref="Web_Service_Consumer" operation="GetWeather"
-			doc:name="Web Service Consumer" />
-		<logger message="#[payload]" level="INFO" doc:name="Logger" />
+        <ws:consumer config-ref="Web_Service_Consumer2" operation="GetWeather" doc:name="Web Service Consumer"/>
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
 
-
-		<dw:transform-message doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+		<logger message="#[payload contains 'No Data Found']" level="INFO" doc:name="Logger" />
+        <choice doc:name="Choice">
+            <when expression="#[payload contains 'No Data Found']">
+                <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+                <set-property propertyName="http.status" value="404" doc:name="Property"/>
+            </when>
+            <otherwise>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
 %input payload application/xml
 %output application/json
 %namespace ns0 http://www.webserviceX.NET
@@ -67,39 +77,15 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	pressure: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.Pressure,
 	pressureTendency: trim read(payload.ns0#GetWeatherResponse.ns0#GetWeatherResult, "application/xml").CurrentWeather.PressureTendency
 }
-
-]]></dw:set-payload>
-			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
-%input payload application/xml
-%output application/java
-%namespace ns0 http://www.webserviceX.NET
----
-{
-	"notFound" : false
-	
-}
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
 otherwise
 {
-	"notFound" : true
-}]]></dw:set-variable>
+}]]></dw:set-payload>
+                </dw:transform-message>
+            </otherwise>
+        </choice>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
 
-		</dw:transform-message>
-		<logger message="#[responseMap['notFound']]" level="INFO"
-			doc:name="Logger" />
-		<choice doc:name="Choice">
-			<when expression="#[responseMap['notFound']]">
-				<set-payload
-					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" />
-				<set-property propertyName="http.status" value="404"
-					doc:name="Property" />
-			</when>
-			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" />
-			</otherwise>
-		</choice>
 
 
 	</flow>
@@ -119,7 +105,9 @@ otherwise
 }]]></dw:set-payload>
 		</dw:transform-message>
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
-			doc:name="Web Service Consumer" />
+			doc:name="WebConsumer" />
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+        <logger level="INFO" doc:name="Logger" message="#[payload]"/>
 		<dw:transform-message doc:name="Transform Message">
 			<dw:set-payload><![CDATA[%dw 1.0
 %output application/json
@@ -133,8 +121,7 @@ otherwise
 	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 }]]></dw:set-payload>
@@ -145,8 +132,7 @@ otherwise
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 	"notFound": true
@@ -183,6 +169,8 @@ otherwise
 		</dw:transform-message>
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="Web Service Consumer" />
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
 
 		<dw:transform-message doc:name="Transform Message">
 			<dw:set-payload><![CDATA[%dw 1.0
@@ -194,12 +182,11 @@ otherwise
 ---
 
 {
-	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
+	countries: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
 		distinctBy $.Country
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 }]]></dw:set-payload>
@@ -210,8 +197,7 @@ otherwise
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 	"notFound": true
@@ -247,6 +233,7 @@ otherwise
 		</dw:transform-message>
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="Web Service Consumer" />
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
 		<logger message="#[payload]" level="INFO" doc:name="Logger" />
 
 		<dw:transform-message doc:name="Transform Message">
@@ -262,12 +249,10 @@ otherwise
 	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
-}
-]]></dw:set-payload>
+}]]></dw:set-payload>
 			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
 %namespace ns0 http://www.webserviceX.NET
 %output application/java
@@ -275,8 +260,7 @@ otherwise
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 	"notFound": true
@@ -312,6 +296,7 @@ otherwise
 		</dw:transform-message>
 		<ws:consumer config-ref="Web_Service_Consumer"
 			operation="GetCitiesByCountry" doc:name="Web Service Consumer" />
+        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
 		<logger message="#[payload]" level="INFO" doc:name="Logger" />
 
 		<dw:transform-message
@@ -329,8 +314,7 @@ otherwise
 		distinctBy $.Country
 		map toItem($)
 }[0]
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 }]]></dw:set-payload>
@@ -341,8 +325,7 @@ otherwise
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "" 
-or payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "Data Not Found"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
 otherwise
 {
 	"notFound": true

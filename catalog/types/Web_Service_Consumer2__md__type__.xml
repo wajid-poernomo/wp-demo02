@@ -3,8 +3,8 @@
   <types class="tree-map">
     <entry>
       <org.mule.common.metadata.DefaultMetaDataKey>
-        <id>GetCitiesByCountry</id>
-        <displayName>GetCitiesByCountry</displayName>
+        <id>GetWeather</id>
+        <displayName>GetWeather</displayName>
         <category>DEFAULT</category>
         <metaDataKeyPropertiesManager>
           <properties>
@@ -27,7 +27,7 @@
         </metaDataModelPropertiesManager>
         <fields>
           <org.mule.common.metadata.DefaultMetaDataField>
-            <name>ns0:CountryName</name>
+            <name>ns0:CityName</name>
             <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
               <dataType>STRING</dataType>
               <metaDataModelPropertiesManager>
@@ -48,6 +48,31 @@
                 <org.mule.common.metadata.property.QNameMetaDataProperty>
                   <name>
                     <namespaceURI>http://www.webserviceX.NET</namespaceURI>
+                    <localPart>CityName</localPart>
+                    <prefix>ns0</prefix>
+                  </name>
+                </org.mule.common.metadata.property.QNameMetaDataProperty>
+              </properties>
+            </metaDataFieldPropertyManager>
+          </org.mule.common.metadata.DefaultMetaDataField>
+          <org.mule.common.metadata.DefaultMetaDataField>
+            <name>ns0:CountryName</name>
+            <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
+              <dataType>STRING</dataType>
+              <metaDataModelPropertiesManager>
+                <properties>
+                  <org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+                    <typeQName reference="../../../../../../org.mule.common.metadata.DefaultMetaDataField/model/metaDataModelPropertiesManager/properties/org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty/typeQName"/>
+                  </org.mule.common.metadata.property.xml.SchemaTypeMetaDataProperty>
+                </properties>
+              </metaDataModelPropertiesManager>
+            </model>
+            <accessType>READ_WRITE</accessType>
+            <metaDataFieldPropertyManager>
+              <properties>
+                <org.mule.common.metadata.property.QNameMetaDataProperty>
+                  <name>
+                    <namespaceURI>http://www.webserviceX.NET</namespaceURI>
                     <localPart>CountryName</localPart>
                     <prefix>ns0</prefix>
                   </name>
@@ -58,7 +83,7 @@
         </fields>
         <rootElement>
           <namespaceURI>http://www.webserviceX.NET</namespaceURI>
-          <localPart>GetCitiesByCountry</localPart>
+          <localPart>GetWeather</localPart>
           <prefix>ns0</prefix>
         </rootElement>
         <schemas class="org.mule.common.metadata.StringBasedSchemaProvider">
@@ -117,8 +142,8 @@
     </entry>
     <entry>
       <org.mule.common.metadata.DefaultMetaDataKey>
-        <id>GetCitiesByCountryResponse</id>
-        <displayName>GetCitiesByCountryResponse</displayName>
+        <id>GetWeatherResponse</id>
+        <displayName>GetWeatherResponse</displayName>
         <category>DEFAULT</category>
         <metaDataKeyPropertiesManager>
           <properties>
@@ -141,7 +166,7 @@
         </metaDataModelPropertiesManager>
         <fields>
           <org.mule.common.metadata.DefaultMetaDataField>
-            <name>ns0:GetCitiesByCountryResult</name>
+            <name>ns0:GetWeatherResult</name>
             <model class="org.mule.common.metadata.DefaultSimpleMetaDataModel">
               <dataType>STRING</dataType>
               <metaDataModelPropertiesManager>
@@ -158,7 +183,7 @@
                 <org.mule.common.metadata.property.QNameMetaDataProperty>
                   <name>
                     <namespaceURI>http://www.webserviceX.NET</namespaceURI>
-                    <localPart>GetCitiesByCountryResult</localPart>
+                    <localPart>GetWeatherResult</localPart>
                     <prefix>ns0</prefix>
                   </name>
                 </org.mule.common.metadata.property.QNameMetaDataProperty>
@@ -168,7 +193,7 @@
         </fields>
         <rootElement>
           <namespaceURI>http://www.webserviceX.NET</namespaceURI>
-          <localPart>GetCitiesByCountryResponse</localPart>
+          <localPart>GetWeatherResponse</localPart>
           <prefix>ns0</prefix>
         </rootElement>
         <schemas class="org.mule.common.metadata.StringBasedSchemaProvider">
@@ -226,5 +251,5 @@
       </org.mule.common.metadata.DefaultXmlMetaDataModel>
     </entry>
   </types>
-  <connectorName>Web_Service_Consumer</connectorName>
+  <connectorName>Web_Service_Consumer2</connectorName>
 </metadata__catalog__entry>

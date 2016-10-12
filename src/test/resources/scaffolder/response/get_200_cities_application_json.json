@@ -1,0 +1,49 @@
+{
+  "cities": [
+    {
+      "name": "Tlemcen Zenata",
+      "description": "Tlemcen Zenata - a great city to be.",
+      "link": "~/weatherApi/weather?country=Algeria&city=Tlemcen Zenata"
+    },
+    {
+      "name": "Oran / Es Senia",
+      "description": "Oran / Es Senia - a great city to be.",
+      "link": "~/weatherApi/weather?country=Algeria&city=Oran / Es Senia"
+    },
+    {
+      "name": "Djerba Mellita",
+      "description": "Djerba Mellita - a great city to be.",
+      "link": "~/weatherApi/weather?country=Tunisia&city=Djerba Mellita"
+    },
+    {
+      "name": "Kairouan",
+      "description": "Kairouan - a great city to be.",
+      "link": "~/weatherApi/weather?country=Tunisia&city=Kairouan"
+    },
+    {
+      "name": "Ahtari",
+      "description": "Ahtari - a great city to be.",
+      "link": "~/weatherApi/weather?country=Finland&city=Ahtari"
+    },
+    {
+      "name": "Ivalo",
+      "description": "Ivalo - a great city to be.",
+      "link": "~/weatherApi/weather?country=Finland&city=Ivalo"
+    },
+    {
+      "name": "Treviso / Istrana",
+      "description": "Treviso / Istrana - a great city to be.",
+      "link": "~/weatherApi/weather?country=Italy&city=Treviso / Istrana"
+    },
+    {
+      "name": "Vicenza",
+      "description": "Vicenza - a great city to be.",
+      "link": "~/weatherApi/weather?country=Italy&city=Vicenza"
+    },
+    {
+      "name": "Wainwright Distant Early Warning",
+      "description": "Wainwright Distant Early Warning - a great city to be.",
+      "link": "~/weatherApi/weather?country=United States&city=Wainwright Distant Early Warning"
+    }
+  ]
+}
