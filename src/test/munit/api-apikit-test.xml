@@ -120,10 +120,13 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 		name="get:/countries/finland:api-config-200-application/json-FlowTest"
 		description="Verifying functionality of [get:/countries/{countryName}:api-config-200-application/json] where countryName is 'finland'">
 		<mock:when messageProcessor=".*:.*" doc:name="Mock">
-            <mock:with-attributes>
-                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
-            </mock:with-attributes>
-            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="application/csv"/>
+			<mock:with-attributes>
+				<mock:with-attribute name="doc:name"
+					whereValue="#['Web Service Consumer']" />
+			</mock:with-attributes>
+			<mock:then-return
+				payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"
+				mimeType="application/csv" />
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
 			method="GET" path="/countries/finland" doc:name="HTTP">
@@ -192,12 +195,12 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 
 	<munit:test name="get:/weather:api-config-404-application/json-FlowTest"
 		description="Verifying functionality of [get:/weather:api-config-404-application/json]">
-        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+		<mock:when messageProcessor=".*:.*" doc:name="Mock">
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
             <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetWeatherResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetWeatherResult&gt;No Data Found&lt;/GetWeatherResult&gt;&lt;/GetWeatherResponse&gt;']" encoding="UTF-8"/>
-        </mock:when>
+		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
 			method="GET" path="/weather" doc:name="HTTP">
 			<http:request-builder>
@@ -214,5 +217,46 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 			expectedValue="#[getResource('scaffolder/response/get_404_weather_application_json.json').asString()]"
 			actualValue="#[payload]" doc:name="assert that - payload is as expected" />
 	</munit:test>
-
+	<munit:test
+		name="get:/cities/hobitcountry:api-config-404-application/json-FlowTest"
+		description="Verifying functionality of [get:/cities/{countryName}:api-config-404-application/json] when countryName is hobitcountry">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"/>
+        </mock:when>
+		<http:request config-ref="HTTP_Request_Configuration"
+			method="GET" path="/cities/hobbiton" doc:name="HTTP">
+			<http:request-builder>
+				<http:header headerName="Accept" value="application/json" />
+			</http:request-builder>
+			<http:success-status-code-validator
+				values="404" />
+		</http:request>
+		<object-to-string-transformer doc:name="http response to string" />
+		<munit:assert-true message="The HTTP Status code is not correct!"
+			condition="#[messageInboundProperty('http.status').is(eq(404))]"
+			doc:name="assert that - http.status eq 404" />
+		<munit:assert-on-equals message="The response payload is not correct!"
+			expectedValue="#[getResource('scaffolder/response/get_404_cities_{countryname}_application_json.json').asString()]"
+			actualValue="#[payload]" doc:name="assert that - payload is as expected" />
+	</munit:test>
+	<munit:test name="get:/countries/hobbitcountry:api-config-404-application/json-FlowTest" description="Verifying functionality of [get:/countries/countryName:api-config-404-application/json] when country name is hobbitcountry">
+        <mock:when messageProcessor=".*:.*" doc:name="Mock">
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"/>
+        </mock:when>
+        <http:request config-ref="HTTP_Request_Configuration" method="GET" path="/countries/hobitcountry" doc:name="HTTP">
+            <http:request-builder>
+                <http:header headerName="Accept" value="application/json" />
+            </http:request-builder>
+            <http:success-status-code-validator values="404" />
+        </http:request>
+        <object-to-string-transformer doc:name="http response to string" />
+        <munit:assert-true message="The HTTP Status code is not correct!" condition="#[messageInboundProperty('http.status').is(eq(404))]" doc:name="assert that - http.status eq 404" />
+        <munit:assert-on-equals message="The response payload is not correct!" expectedValue="#[getResource('scaffolder/response/get_404_countries_{countryname}_application_json.json').asString()]" actualValue="#[payload]" doc:name="assert that - payload is as expected" />
+    </munit:test>
 </mule>
