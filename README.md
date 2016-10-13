@@ -41,7 +41,7 @@ they might need to make a call to get countries, then get cities, and store thes
 http://localhost:8081/weatherApi/countries
 
 they get a response with links to the cities in those countries:
-
+```json
 {
   "countries": [
     {
@@ -71,11 +71,12 @@ they get a response with links to the cities in those countries:
     }
   ]
 }
-
+```
 Then when they navigate to:
 
 http://localhost:8081/weatherApi/cities/Finland
 
+```json
 {
   "cities": [
     {
@@ -90,7 +91,7 @@ http://localhost:8081/weatherApi/cities/Finland
     }
   ]
 }
-
+```
 They have links to the weather for each of the cities.
 
 **Unit Testing.**
