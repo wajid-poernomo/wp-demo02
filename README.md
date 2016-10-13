@@ -14,8 +14,10 @@
 The following API calls are intended to aid discovery through collection-item pattern and hypermedia. Because REST is a constraints driven
 approach, I have used http status codes to indicate validation (400), empty results (404), and server errors(500).
 
-In terms of hypermedia - if a apps developer wanted to drill down to weather using the old SOAP service, 
-they might need to make a call the service to get the countries, then a separate call to cities, and while at the same time store these as application state. 
+**Hypermedia**
+
+If a apps developer wanted to drill down to weather using the old SOAP service, they might need to make a call the service to get the countries, 
+then a separate call to cities, and while at the same time managing the results as application state. 
 
 Instead of this when they call:
 
@@ -74,10 +76,12 @@ http://localhost:8081/weatherApi/cities/Finland
 }
 ```
 
-In this way the "application state" is managed at the api/resource discovery level.
+In this way the "application state" is managed at the api/resource level.
+
+**Collection-Item Pattern**
 
 Usage of the collection-item pattern was used as a way of promoting reusable code in RAML, as well as a "discoverable api".
-You can be examples here browsing the following Uris (there are hypermedia links for weather):
+Some examples are provided here:
 
 status 200:
 
@@ -86,12 +90,14 @@ http://localhost:8081/weatherApi/countries/Algeria
 http://localhost:8081/weatherApi/cities
 http://localhost:8081/weatherApi/cities/Tlemcen%20Zenata
 
-Error code exsamples are as follows (404):
+**Error Codes**
+
+Error code examples are as follows (404):
 
 http://localhost:8081/weatherApi/cities/hobbiton
 http://localhost:8081/weatherApi/countries/leggoland
 
-validation error - city or country name less than 2 characters (400):
+Validation error - city or country name less than 2 characters (400):
 
 http://localhost:8081/weatherApi/cities/a
 http://localhost:8081/weatherApi/countries/a
@@ -99,7 +105,8 @@ http://localhost:8081/weatherApi/weather?country=a&city=b
 
 500s are covered in unit tests. 
 
-**Unit Testing.**
+
+**Running Unit Tests.**
 
 To run the unit tests:
 
