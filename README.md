@@ -15,7 +15,9 @@ The following API calls are intended to aid discovery through collection-item pa
 approach, I have used http status codes to indicate validation (400), empty results (404), and server errors(500).
 
 In terms of hypermedia - if a apps developer wanted to drill down to weather using the old SOAP service, 
-they might need to make a call to get countries, then get cities, and store these as application state. Instead of this when they call:
+they might need to make a call the service to get the countries, then a separate call to cities, and while at the same time store these as application state. 
+
+Instead of this when they call:
 
 http://localhost:8081/weatherApi/countries
 
@@ -51,7 +53,7 @@ they get a response with links to the cities in those countries:
   ]
 }
 ```
-Then when they navigate to:
+Then when they navigate to the following, which has additional links to the weather:
 
 http://localhost:8081/weatherApi/cities/Finland
 
@@ -71,7 +73,8 @@ http://localhost:8081/weatherApi/cities/Finland
   ]
 }
 ```
-They have links to the weather for each of the cities.
+
+In this way the "application state" is managed at the api/resource discovery level.
 
 Usage of the collection-item pattern was used as a way of promoting reusable code in RAML, as well as a "discoverable api".
 You can be examples here browsing the following Uris (there are hypermedia links for weather):
