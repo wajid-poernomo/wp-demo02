@@ -124,9 +124,11 @@ Working with a design first approach using RAML was excellent, and I was able to
 
 I also found the unit test scaffolding based on the RAML extremely useful.
 
-Based on my experience here, including some mocking issues, being stricter around format, mime type and encoding for messages
-flowing in and out of components, as well as separating into subflows, would be good design approaches going forwards.
-As a unit testing note, I would probably try to avoid mocking the web service consumer component directly.
+Because of the CDATA payloads, in addition to creating some issues both in terms of the mock web service, and the unit testing mocks, I found I needed to add routing based 
+on string comparison to avoid issues with transformation.
+
+In general being stricter around format and structure of messages flowing in and out of components, as well as separating into subflows, would be good design approaches 
+to avoid these two issues. Also in terms of unit testing avoiding mocking the web service consumer directly might be a better practice going forwards.
 
 One issue I had here was wanting more granularity in exception handling,
 and the 500 is currently mapped to java.lang.Exception as a fall through unless a more specific
