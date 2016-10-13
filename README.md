@@ -1,8 +1,8 @@
 # wp-demo02
 **This is a simple REST api using RAML and MULE. To run this project you will need Anypoint Studio already installed.**
 
-1. Import the project into your workspace within Anypoint Studio.
-2. Ensure that the mockservice project is running (see other repository).
+1. Import the project into your workspace within Anypoint Studio, and make sure the project settings have jdk 8 set as a JRE system library.
+2. Ensure that the mockservice project is running (see https://github.com/wajid-poernomo/wp-demo-mockservice).
 3. Run As -> Mule Application.
 
 **Design and implementation notes:**
