@@ -14,6 +14,8 @@
 The following API calls are intended to aid discovery through collection-item pattern and hypermedia. Because REST is a constraints driven
 approach, I have used http status codes to indicate validation (400), empty results (404), and server errors(500).
 
+The API is meant as a new REST based gateway for the soap based web service http://www.webservicex.net/globalweather.asmx?wsdl.
+
 **Hypermedia**
 
 If a apps developer wanted to drill down to weather using the old SOAP service, they might need to make a call the service to get the countries, 
