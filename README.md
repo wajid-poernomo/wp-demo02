@@ -134,6 +134,6 @@ One issue I had here was wanting more granularity in exception handling,
 and the 500 is currently mapped to java.lang.Exception as a fall through unless a more specific
 exception is thrown (as in the case of 404 and 400). This would definitely warrant more design going further.
 
-Another issue have found mocking CDATA responses and encoded strings sometimes becomes decoded to xml 
+Another issue I have found was mocking CDATA responses and encoded strings sometimes becomes decoded to xml 
 when touching the api-apikit-test.xml file. This appears to be Anypoint studio trying to help, but actually creates incorrect results when 
 running the mock responses through dataweave. Following the above design approaches going forwards would help guard against this. 
