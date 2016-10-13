@@ -11,7 +11,7 @@
 
 **Technical Specification:**
 
-The following API calls are intended to aid discovery through collection-item pattern and hypermedia. Because REST is a constraints driven
+The following API is designed for discoverability and ease of use through the collection-item pattern and hypermedia. Because REST is a constraints driven
 approach, I have used http status codes to indicate validation (400), empty results (404), and server errors(500).
 
 The intention is to provide REST based API interface/gateway for the older soap based web service http://www.webservicex.net/globalweather.asmx?wsdl.
