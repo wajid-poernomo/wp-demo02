@@ -128,12 +128,12 @@ Because of the CDATA payloads, in addition to creating some issues both in terms
 on string comparison to avoid issues with transformation.
 
 In general being stricter around format and structure of messages flowing in and out of components, as well as separating into subflows, would be good design approaches 
-to avoid these two issues. Also in terms of unit testing avoiding mocking the web service consumer directly might be a better practice going forwards.
+to avoid these two issues. Also in terms of unit testing avoiding mocking the web service consumer directly might be a better practice.
 
 One issue I had here was wanting more granularity in exception handling,
 and the 500 is currently mapped to java.lang.Exception as a fall through unless a more specific
-exception is thrown (as in the case of 404 and 400). This would definitely warrant more design going further.
+exception is thrown (as in the case of 404 and 400).
 
 Another issue I have found was mocking CDATA responses and encoded strings sometimes becomes decoded to xml 
 when touching the api-apikit-test.xml file. This appears to be Anypoint studio trying to help, but actually creates incorrect results when 
-running the mock responses through dataweave. Following the above design approaches going forwards would help guard against this. 
+running the mock responses through dataweave. 
