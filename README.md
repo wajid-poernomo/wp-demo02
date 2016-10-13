@@ -1,11 +1,11 @@
 # wp-demo02
-This is a simple REST api using RAML and MULE. To run this project you will need Anypoint Studio already installed.
+**This is a simple REST api using RAML and MULE. To run this project you will need Anypoint Studio already installed.**
 
 1. Import the project into your workspace within Anypoint Studio.
 2. Ensure that the mockservice project is running (see other repository).
 3. Run As -> Mule Application.
 
-Design and implementation notes:
+**Design and implementation notes:**
 
 The following API calls are intended to aid discovery through collection-item pattern and hypermedia. In addition to this,
 to work develop in a constraints based restful way, I have used http status codes to indicate validation (400), empty results (404), 
@@ -93,6 +93,8 @@ http://localhost:8081/weatherApi/cities/Finland
 
 They have links to the weather for each of the cities.
 
+**Unit Testing.**
+
 To run the unit tests:
 
 1. Go to /src/test/munit/api-apikit-test.xml and double click.
@@ -104,3 +106,7 @@ One issue I have found working the the CDATA responses and encoded strings, is t
 touching the api-apikit-test.xml file. This appears to be Anypoint studio trying to help, but actually creates incorrect results when running 
 the mock responses through dataweave. I've spent some time experimenting with setting mime/types and encoding but currently I have avoid 
 auto-saving after I have a working setup.
+
+As a unit testing note, I would probably try to avoid mocking the web service consumer component directly in the future, possibly with some
+layer of indirection like sub-flows, partly for the difficulty in mocking the xml responses that I have noted here.
+
