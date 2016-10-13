@@ -21,7 +21,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['WebConsumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&lt;NewDataSet&gt;&lt;Table&gt;&lt;Country&gt;Algeria&lt;/Country&gt;&lt;City&gt;Tlemcen Zenata&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Algeria&lt;/Country&gt;&lt;City&gt;Oran / Es Senia&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Tunisia&lt;/Country&gt;&lt;City&gt;Djerba Mellita&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Tunisia&lt;/Country&gt;&lt;City&gt;Kairouan&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Finland&lt;/Country&gt;&lt;City&gt;Ahtari&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Finland&lt;/Country&gt;&lt;City&gt;Ivalo&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Italy&lt;/Country&gt;&lt;City&gt;Treviso / Istrana&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Italy&lt;/Country&gt;&lt;City&gt;Vicenza&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;United States&lt;/Country&gt;&lt;City&gt;Wainwright Distant Early Warning&lt;/City&gt;&lt;/Table&gt;&lt;/NewDataSet&gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Algeria&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Tlemcen Zenata&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Algeria&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Oran / Es Senia&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Tunisia&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Djerba Mellita&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Tunisia&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Kairouan&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Italy&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Treviso / Istrana&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Italy&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Vicenza&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;United States&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Wainwright Distant Early Warning&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -46,7 +46,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&lt;NewDataSet&gt;&lt;Table&gt;&lt;Country&gt;Algeria&lt;/Country&gt;&lt;City&gt;Tlemcen Zenata&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Algeria&lt;/Country&gt;&lt;City&gt;Oran / Es Senia&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Tunisia&lt;/Country&gt;&lt;City&gt;Djerba Mellita&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Tunisia&lt;/Country&gt;&lt;City&gt;Kairouan&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Finland&lt;/Country&gt;&lt;City&gt;Ahtari&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Finland&lt;/Country&gt;&lt;City&gt;Ivalo&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Italy&lt;/Country&gt;&lt;City&gt;Treviso / Istrana&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;Italy&lt;/Country&gt;&lt;City&gt;Vicenza&lt;/City&gt;&lt;/Table&gt;&lt;Table&gt;&lt;Country&gt;United States&lt;/Country&gt;&lt;City&gt;Wainwright Distant Early Warning&lt;/City&gt;&lt;/Table&gt;&lt;/NewDataSet&gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Algeria&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Tlemcen Zenata&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Algeria&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Oran / Es Senia&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Tunisia&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Djerba Mellita&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Tunisia&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Kairouan&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Italy&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Treviso / Istrana&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Italy&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Vicenza&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;United States&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Wainwright Distant Early Warning&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -70,7 +70,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetWeatherResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetWeatherResult&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&amp;gt; &amp;lt;CurrentWeather&amp;gt; &amp;lt;Location&amp;gt;BOSTON LOGAN INTERNATIONAL, MA, United States (KBOS) 42-22N 071-01W 54M&amp;lt;/Location&amp;gt; &amp;lt;Time&amp;gt;Nov 30, 2013 - 03:54 PM EST / 2013.11.30 2054 UTC&amp;lt;/Time&amp;gt; &amp;lt;Wind&amp;gt; from the E (100 degrees) at 5 MPH (4 KT):0&amp;lt;/Wind&amp;gt; &amp;lt;Visibility&amp;gt; 10 mile(s):0&amp;lt;/Visibility&amp;gt; &amp;lt;SkyConditions&amp;gt; mostly cloudy&amp;lt;/SkyConditions&amp;gt; &amp;lt;Temperature&amp;gt; 30.9 F (-0.6 C)&amp;lt;/Temperature&amp;gt; &amp;lt;Wind&amp;gt;Windchill: 26 F (-3 C):1&amp;lt;/Wind&amp;gt; &amp;lt;DewPoint&amp;gt; 18.0 F (-7.8 C)&amp;lt;/DewPoint&amp;gt; &amp;lt;RelativeHumidity&amp;gt; 58%&amp;lt;/RelativeHumidity&amp;gt; &amp;lt;Pressure&amp;gt; 30.63 in. Hg (1037 hPa)&amp;lt;/Pressure&amp;gt; &amp;lt;PressureTendency&amp;gt; 0.07 inches (2.3 hPa) lower than three hours ago&amp;lt;/PressureTendency&amp;gt; &amp;lt;Status&amp;gt;Success&amp;lt;/Status&amp;gt; &amp;lt;/CurrentWeather&amp;gt;&lt;/GetWeatherResult&gt;&lt;/GetWeatherResponse&gt;']" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetWeatherResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetWeatherResult&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-16&amp;quot;?&amp;gt; &amp;lt;CurrentWeather&amp;gt; &amp;lt;Location&amp;gt;BOSTON LOGAN INTERNATIONAL, MA, United States (KBOS) 42-22N 071-01W 54M&amp;lt;/Location&amp;gt; &amp;lt;Time&amp;gt;Nov 30, 2013 - 03:54 PM EST / 2013.11.30 2054 UTC&amp;lt;/Time&amp;gt; &amp;lt;Wind&amp;gt; from the E (100 degrees) at 5 MPH (4 KT):0&amp;lt;/Wind&amp;gt; &amp;lt;Visibility&amp;gt; 10 mile(s):0&amp;lt;/Visibility&amp;gt; &amp;lt;SkyConditions&amp;gt; mostly cloudy&amp;lt;/SkyConditions&amp;gt; &amp;lt;Temperature&amp;gt; 30.9 F (-0.6 C)&amp;lt;/Temperature&amp;gt; &amp;lt;Wind&amp;gt;Windchill: 26 F (-3 C):1&amp;lt;/Wind&amp;gt; &amp;lt;DewPoint&amp;gt; 18.0 F (-7.8 C)&amp;lt;/DewPoint&amp;gt; &amp;lt;RelativeHumidity&amp;gt; 58%&amp;lt;/RelativeHumidity&amp;gt; &amp;lt;Pressure&amp;gt; 30.63 in. Hg (1037 hPa)&amp;lt;/Pressure&amp;gt; &amp;lt;PressureTendency&amp;gt; 0.07 inches (2.3 hPa) lower than three hours ago&amp;lt;/PressureTendency&amp;gt; &amp;lt;Status&amp;gt;Success&amp;lt;/Status&amp;gt; &amp;lt;/CurrentWeather&amp;gt;&lt;/GetWeatherResult&gt;&lt;/GetWeatherResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -95,12 +95,11 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 		name="get:/cities/finland:api-config-200-application/json-FlowTest"
 		description="Verifying functionality of [get:/cities/{countryName}:api-config-200-application/json] where countryName is 'finland'">
 		<mock:when messageProcessor=".*:.*" doc:name="Mock">
-			<mock:with-attributes>
-				<mock:with-attribute name="doc:name"
-					whereValue="#['Web Service Consumer']" />
-			</mock:with-attributes>
-			<mock:then-return
-				payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" />
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
+
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
 			method="GET" path="/cities/finland" doc:name="HTTP">
@@ -121,13 +120,11 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
 		name="get:/countries/finland:api-config-200-application/json-FlowTest"
 		description="Verifying functionality of [get:/countries/{countryName}:api-config-200-application/json] where countryName is 'finland'">
 		<mock:when messageProcessor=".*:.*" doc:name="Mock">
-			<mock:with-attributes>
-				<mock:with-attribute name="doc:name"
-					whereValue="#['Web Service Consumer']" />
-			</mock:with-attributes>
-			<mock:then-return
-				payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"
-				mimeType="application/csv" />
+            <mock:with-attributes>
+                <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
+            </mock:with-attributes>
+            <mock:then-return payload="#['&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ahtari&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;Table&amp;gt;&amp;lt;Country&amp;gt;Finland&amp;lt;/Country&amp;gt;&amp;lt;City&amp;gt;Ivalo&amp;lt;/City&amp;gt;&amp;lt;/Table&amp;gt;&amp;lt;/NewDataSet&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
+
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
 			method="GET" path="/countries/finland" doc:name="HTTP">
@@ -150,7 +147,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['WebConsumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -176,7 +173,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" encoding="UTF-8" mimeType="application/xml"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
