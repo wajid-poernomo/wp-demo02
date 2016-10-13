@@ -122,16 +122,14 @@ Working with a design first approach using RAML was excellent, and I was able to
 
 I also found the unit test scaffolding based on the RAML extremely useful.
 
+Based on my experience here, including some mocking issues, being stricter around format, mime type and encoding for messages
+flowing in and out of components, as well as separating into subflows, would be good design approaches going forwards.
+As a unit testing note, I would probably try to avoid mocking the web service consumer component directly.
+
 One issue I had here was wanting more granularity in exception handling,
 and the 500 is currently mapped to java.lang.Exception as a fall through unless a more specific
 exception is thrown (as in the case of 404 and 400). This would definitely warrant more design going further.
 
-As noted in the mock service commentary, from a design point of view being stricter around format, mime type and encoding for messages
-flowing in and out of components, as well as separating into subflows, would be good design approaches based on my experience here.
-
-I have found working the the CDATA responses and encoded strings, is that the mock data sometimes becomes decoded to xml 
+Another issue have found mocking CDATA responses and encoded strings sometimes becomes decoded to xml 
 when touching the api-apikit-test.xml file. This appears to be Anypoint studio trying to help, but actually creates incorrect results when 
-running the mock responses through dataweave. 
-
-As a unit testing note, I would probably try to avoid mocking the web service consumer component directly in the future, possibly with some
-layer of indirection like sub-flows, partly for the difficulty in mocking the xml responses that I have noted here.
+running the mock responses through dataweave. Following the above design approaches going forwards would help guard against this. 
