@@ -52,10 +52,10 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
         <validation:is-true expression="#[message.outboundProperties.isValidInput]" doc:name="Validation" exceptionClass="org.mule.module.apikit.exception.BadRequestException" message="{ &quot;test&quot; }"/>
         <ws:consumer config-ref="Web_Service_Consumer2" operation="GetWeather" doc:name="Web Service Consumer"/>
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
-        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        <logger level="INFO" doc:name="Logger" message="#[payload]"/>
 
         <choice doc:name="Choice">
-            <when expression="#[payload contains 'No Data Found']">
+            <when expression="#[payload contains 'Data Not Found']">
                 <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" mimeType="application/json"/>
                 <set-property propertyName="http.status" value="404" doc:name="404"/>
             </when>
@@ -108,9 +108,19 @@ otherwise
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="WebConsumer" />
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
-        <logger level="INFO" doc:name="Logger" message="#[payload]"/>
-		<dw:transform-message doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+        <logger level="INFO" doc:name="Logger"/>
+
+		<choice doc:name="Choice">
+			<when expression="#[payload contains '&amp;lt;NewDataSet /&amp;gt;']">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" mimeType="application/json"/>
+				<set-property propertyName="http.status" value="404"
+					doc:name="404" />
+			</when>
+			<otherwise>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 %namespace ns0 http://www.webserviceX.NET
 %var toItem = (item) -> {name: item.City, description: item.City ++ " - a great city to be.", link: "~/weatherApi/" 
@@ -122,35 +132,24 @@ otherwise
 	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 }]]></dw:set-payload>
-			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
 %namespace ns0 http://www.webserviceX.NET
 %output application/java
 ---
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 	"notFound": true
 }]]></dw:set-variable>
-		</dw:transform-message>
-		<logger message="#[responseMap['notFound']]" level="INFO"
-			doc:name="Logger" />
-		<choice doc:name="Choice">
-			<when expression="#[responseMap['notFound']]">
-				<set-payload
-					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" mimeType="application/json"/>
-				<set-property propertyName="http.status" value="404"
-					doc:name="404" />
-			</when>
-			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
+                </dw:transform-message>
+
 			</otherwise>
 		</choice>
 
@@ -171,10 +170,19 @@ otherwise
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="Web Service Consumer" />
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
-        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        <logger level="INFO" doc:name="Logger"/>
 
-		<dw:transform-message doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+		<choice doc:name="Choice">
+			<when expression="#[payload contains '&amp;lt;NewDataSet /&amp;gt;']">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" mimeType="application/json"/>
+				<set-property propertyName="http.status" value="404"
+					doc:name="404" />
+			</when>
+			<otherwise>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 %namespace ns0 http://www.webserviceX.NET
 %var toItem = (item) -> {name: item.Country, description: item.Country ++ " - a great country to be.", link: "~/weatherApi/" 
@@ -187,35 +195,24 @@ otherwise
 		distinctBy $.Country
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 }]]></dw:set-payload>
-			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
 %namespace ns0 http://www.webserviceX.NET
 %output application/java
 ---
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 	"notFound": true
 }]]></dw:set-variable>
-		</dw:transform-message>
-		<logger message="#[responseMap['notFound']]" level="INFO"
-			doc:name="Logger" />
-		<choice doc:name="Choice">
-			<when expression="#[responseMap['notFound']]">
-				<set-payload
-					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" mimeType="application/json"/>
-				<set-property propertyName="http.status" value="404"
-					doc:name="404" />
-			</when>
-			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
+                </dw:transform-message>
+
 			</otherwise>
 		</choice>
 
@@ -239,11 +236,19 @@ otherwise
 		<ws:consumer config-ref="Web_Service_Consumer" operation="GetCitiesByCountry"
 			doc:name="Web Service Consumer" />
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+        <logger level="INFO" doc:name="Logger"/>
 
-		<logger message="#[payload]" level="INFO" doc:name="Logger" />
-
-		<dw:transform-message doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+		<choice doc:name="Choice">
+			<when expression="#[payload contains '&amp;lt;NewDataSet /&amp;gt;']">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set 404" mimeType="application/json"/>
+				<set-property propertyName="http.status" value="404"
+					doc:name="404" />
+			</when>
+			<otherwise>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 %namespace ns0 http://www.webserviceX.NET
 %var toItem = (item) -> {name: item.City, description: item.City ++ " - a great city to be.", link: "~/weatherApi/" 
@@ -255,35 +260,12 @@ otherwise
 	cities: read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet.*Table 
 		map toItem($)
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 }]]></dw:set-payload>
-			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
-%namespace ns0 http://www.webserviceX.NET
-%output application/java
----
-{
-	"notFound": false
-}
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
-otherwise
-{
-	"notFound": true
-}]]></dw:set-variable>
-		</dw:transform-message>
-		<logger message="#[responseMap['notFound']]" level="INFO"
-			doc:name="Logger" />
-		<choice doc:name="Choice">
-			<when expression="#[responseMap['notFound']]">
-				<set-payload
-					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set 404" mimeType="application/json"/>
-				<set-property propertyName="http.status" value="404"
-					doc:name="404" />
-			</when>
-			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
+                </dw:transform-message>
+
 			</otherwise>
 		</choice>
 
@@ -306,11 +288,19 @@ otherwise
 		<ws:consumer config-ref="Web_Service_Consumer"
 			operation="GetCitiesByCountry" doc:name="Web Service Consumer" />
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
-		<logger message="#[payload]" level="INFO" doc:name="Logger" />
+        <logger level="INFO" doc:name="Logger"/>
 
-		<dw:transform-message
-			doc:name="Transform Message">
-			<dw:set-payload><![CDATA[%dw 1.0
+		<choice doc:name="Choice">
+			<when expression="#[payload contains '&amp;lt;NewDataSet /&amp;gt;']">
+				<set-payload
+					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
+					doc:name="Set Payload" mimeType="application/json"/>
+				<set-property propertyName="http.status" value="404"
+					doc:name="404" />
+			</when>
+			<otherwise>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 %namespace ns0 http://www.webserviceX.NET
 %var toItem = (item) -> {name: item.Country, description: item.Country ++ " - a great country to be.", link: "~/weatherApi/" 
@@ -323,35 +313,24 @@ otherwise
 		distinctBy $.Country
 		map toItem($)
 }[0]
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "application/xml").NewDataSet != "<NewDataSet />"
 otherwise
 {
 }]]></dw:set-payload>
-			<dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
+                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
 %namespace ns0 http://www.webserviceX.NET
 %output application/java
 ---
 {
 	"notFound": false
 }
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "&lt;NewDataSet /&gt;"
+when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
 otherwise
 {
 	"notFound": true
 }]]></dw:set-variable>
-		</dw:transform-message>
-		<logger message="#[responseMap['notFound']]" level="INFO"
-			doc:name="Logger" />
-		<choice doc:name="Choice">
-			<when expression="#[responseMap['notFound']]">
-				<set-payload
-					value="{ &quot;message&quot;: &quot;Resource not found&quot; }"
-					doc:name="Set Payload" mimeType="application/json"/>
-				<set-property propertyName="http.status" value="404"
-					doc:name="404" />
-			</when>
-			<otherwise>
-				<set-payload value="#[payload]" doc:name="Set Payload" mimeType="application/json"/>
+                </dw:transform-message>
+
 			</otherwise>
 		</choice>
 
