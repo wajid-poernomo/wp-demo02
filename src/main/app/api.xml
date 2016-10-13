@@ -136,18 +136,6 @@ when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<Ne
 otherwise
 {
 }]]></dw:set-payload>
-                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
-%namespace ns0 http://www.webserviceX.NET
-%output application/java
----
-{
-	"notFound": false
-}
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
-otherwise
-{
-	"notFound": true
-}]]></dw:set-variable>
                 </dw:transform-message>
 
 			</otherwise>
@@ -199,18 +187,6 @@ when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<Ne
 otherwise
 {
 }]]></dw:set-payload>
-                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
-%namespace ns0 http://www.webserviceX.NET
-%output application/java
----
-{
-	"notFound": false
-}
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
-otherwise
-{
-	"notFound": true
-}]]></dw:set-variable>
                 </dw:transform-message>
 
 			</otherwise>
@@ -317,18 +293,6 @@ when read(payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult, "
 otherwise
 {
 }]]></dw:set-payload>
-                    <dw:set-variable variableName="responseMap"><![CDATA[%dw 1.0
-%namespace ns0 http://www.webserviceX.NET
-%output application/java
----
-{
-	"notFound": false
-}
-when payload.ns0#GetCitiesByCountryResponse.ns0#GetCitiesByCountryResult != "<NewDataSet />"
-otherwise
-{
-	"notFound": true
-}]]></dw:set-variable>
                 </dw:transform-message>
 
 			</otherwise>
