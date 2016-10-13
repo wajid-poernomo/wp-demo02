@@ -21,7 +21,7 @@ then a separate call to cities, and while at the same time managing the results 
 
 Instead of this when they call:
 
-http://localhost:8081/weatherApi/countries
+http://localhost:8081/weatherApi/countries <br />
 
 they get a response with links to the cities in those countries:
 ```json
@@ -57,7 +57,7 @@ they get a response with links to the cities in those countries:
 ```
 Then when they navigate to the following, there are additional links to the weather for the cities:
 
-http://localhost:8081/weatherApi/cities/Finland
+http://localhost:8081/weatherApi/cities/Finland <br />
 
 ```json
 {
@@ -85,10 +85,10 @@ Some examples are provided here:
 
 status 200:
 
-http://localhost:8081/weatherApi/countries
-http://localhost:8081/weatherApi/countries/Algeria
-http://localhost:8081/weatherApi/cities
-http://localhost:8081/weatherApi/cities/Tlemcen%20Zenata
+http://localhost:8081/weatherApi/countries <br />
+http://localhost:8081/weatherApi/countries/Algeria <br />
+http://localhost:8081/weatherApi/cities  <br /> 
+http://localhost:8081/weatherApi/cities/Tlemcen%20Zenata <br />
 
 **Error Codes**
 
@@ -99,9 +99,9 @@ http://localhost:8081/weatherApi/countries/leggoland
 
 Validation error - city or country name less than 2 characters (400):
 
-http://localhost:8081/weatherApi/cities/a
-http://localhost:8081/weatherApi/countries/a
-http://localhost:8081/weatherApi/weather?country=a&city=b
+http://localhost:8081/weatherApi/cities/a <br />
+http://localhost:8081/weatherApi/countries/a <br />
+http://localhost:8081/weatherApi/weather?country=a&city=b <br />
 
 500s are covered in unit tests. 
 
