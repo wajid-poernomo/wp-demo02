@@ -53,7 +53,7 @@ they get a response with links to the cities in those countries:
   ]
 }
 ```
-Then when they navigate to the following, which has additional links to the weather:
+Then when they navigate to the following, there are additional links to the weather for the cities:
 
 http://localhost:8081/weatherApi/cities/Finland
 
