@@ -233,7 +233,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="application/xml"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"/>
 
 		</mock:when>
 		<http:request config-ref="HTTP_Request_Configuration"
@@ -260,7 +260,7 @@ http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/moc
             <mock:with-attributes>
                 <mock:with-attribute name="doc:name" whereValue="#['Web Service Consumer']"/>
             </mock:with-attributes>
-            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;lt;NewDataSet /&amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']" mimeType="text/plain"/>
+            <mock:then-return payload="#['&lt;GetCitiesByCountryResponse xmlns=&quot;http://www.webserviceX.NET&quot;&gt;&lt;GetCitiesByCountryResult&gt;&amp;amp;lt;NewDataSet /&amp;amp;gt;&lt;/GetCitiesByCountryResult&gt;&lt;/GetCitiesByCountryResponse&gt;']"/>
         </mock:when>
 
 		<http:request config-ref="HTTP_Request_Configuration"

@@ -48,7 +48,7 @@ http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mu
 	}
 }]]></dw:set-payload>
         </dw:transform-message>
-        <set-property propertyName="isValidInput" value="#[message.inboundProperties.'http.query.params'.city.length() &gt; 2]" doc:name="Property"/>
+        <set-property propertyName="isValidInput" value="#[message.inboundProperties.'http.query.params'.city.length() &gt;= 2 &amp;&amp; message.inboundProperties.'http.query.params'.country.length() &gt;= 2]" doc:name="Property"/>
         <validation:is-true expression="#[message.outboundProperties.isValidInput]" doc:name="Validation" exceptionClass="org.mule.module.apikit.exception.BadRequestException" message="{ &quot;test&quot; }"/>
         <ws:consumer config-ref="Web_Service_Consumer2" operation="GetWeather" doc:name="Web Service Consumer"/>
         <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
